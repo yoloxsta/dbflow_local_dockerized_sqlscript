@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Project</title>
+</head>
+<body>
+    <h1>Submit Your Name</h1>
+    <form id="nameForm">
+        <input type="text" id="name" placeholder="Enter your name" required>
+        <button type="submit">Submit</button>
+    </form>
+    
+    <script>
+        document.getElementById('nameForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const name = document.getElementById('name').value;
+
+            fetch('http://localhost:3000/submit', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ name: name }),
+            })
+            .then(response => response.text())
+            .then(data => {
+                alert(data);
+                document.getElementById('name').value = '';  // Clear input field
+            })
+            .catch(error => {
+                alert('Error: ' + error);
+            });
+        });
+    </script>
+</body>
+</html>
